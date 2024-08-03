@@ -16,7 +16,7 @@ import (
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/chromedp"
 
-	"github.com/Davincible/chromedp-undetected/util/easyjson"
+	"github.com/godovski/chromedp-undetected/util/easyjson"
 )
 
 // Cookie is used to set browser cookies.
