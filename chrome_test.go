@@ -17,7 +17,7 @@ func TestChromedpundetected(t *testing.T) {
 		n,
 		NewConfig(
 			WithTimeout(20*time.Second),
-			WithHeadless(),
+			WithXvfb(),
 		),
 		func(ctx context.Context) error {
 			return chromedp.Run(ctx,

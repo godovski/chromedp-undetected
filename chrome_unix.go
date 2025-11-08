@@ -1,6 +1,6 @@
 //go:build linux
 
-// Package chromedpundetected provides a chromedp context with an undetected
+// Package chromedpundetected provides a chromedp context with an framebuffered
 // Chrome browser.
 package chromedpundetected
 
@@ -12,7 +12,7 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func headlessOpts() (opts []chromedp.ExecAllocatorOption, cleanup func() error, err error) {
+func xvfbOpts() (opts []chromedp.ExecAllocatorOption, cleanup func() error, err error) {
 	// Create virtual display
 	frameBuffer, err := newFrameBuffer("1920x1080x24")
 	if err != nil {

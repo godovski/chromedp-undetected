@@ -33,7 +33,7 @@ func New(config Config) (context.Context, context.CancelFunc, error) {
 		config.UserDataDir = path.Join(os.TempDir(), DefaultUserDirPrefix+uuid.NewString())
 	}
 
-	headlessOpts, closeFrameBuffer, err := headlessFlag(config)
+	xvfbOpts, closeFrameBuffer, err := useXvfbFlag(config)
 	if err != nil {
 		return nil, func() {}, err
 	}
@@ -53,13 +53,13 @@ func New(config Config) (context.Context, context.CancelFunc, error) {
 	opts = append(opts, debuggerAddrFlag(config)...)
 	opts = append(opts, noSandboxFlag(config)...)
 	opts = append(opts, chromedp.UserDataDir(config.UserDataDir))
-	opts = append(opts, headlessOpts...)
+	opts = append(opts, xvfbOpts...)
 	opts = append(opts, config.ChromeFlags...)
-	
+
 	if config.ChromePath != "" {
 		opts = append(opts, chromedp.ExecPath(config.ChromePath))
 	}
-	
+
 	ctx := context.Background()
 	if config.Ctx != nil {
 		ctx = config.Ctx
@@ -136,24 +136,24 @@ func logLevelFlag(config Config) chromedp.ExecAllocatorOption {
 	return chromedp.Flag("log-level", strconv.Itoa(config.LogLevel))
 }
 
-func headlessFlag(config Config) ([]chromedp.ExecAllocatorOption, func() error, error) {
+func useXvfbFlag(config Config) ([]chromedp.ExecAllocatorOption, func() error, error) {
 	var opts []chromedp.ExecAllocatorOption
 
 	cleanup := func() error { return nil }
 
-	if config.Headless {
+	if config.UseXvfb {
 		var (
 			optx []chromedp.ExecAllocatorOption
 			err  error
 		)
 
-		optx, cleanup, err = headlessOpts()
+		optx, cleanup, err = xvfbOpts()
 		if err != nil {
 			return nil, cleanup, err
 		}
 
 		opts = append(opts,
-			// chromedp.Flag("headless", true),
+			// chromedp.Flag("headless", false),
 			chromedp.Flag("window-size", "1920,1080"),
 			chromedp.Flag("start-maximized", true),
 			chromedp.Flag("no-sandbox", true),

@@ -15,7 +15,7 @@ func TestRunCommand(t *testing.T) {
 		n,
 		NewConfig(
 			WithTimeout(20*time.Second),
-			WithHeadless(),
+			WithXvfb(),
 		),
 		func(ctx context.Context) error {
 			version := make(map[string]string)
@@ -35,7 +35,7 @@ func TestBlockURLs(t *testing.T) {
 		n,
 		NewConfig(
 			WithTimeout(20*time.Second),
-			WithHeadless(),
+			WithXvfb(),
 		),
 		func(ctx context.Context) error {
 			if err := chromedp.Run(ctx,
@@ -66,7 +66,7 @@ func TestCookiesExtract(t *testing.T) {
 		n,
 		NewConfig(
 			WithTimeout(20*time.Second),
-			WithHeadless(),
+			WithXvfb(),
 		),
 		func(ctx context.Context) error {
 			var cookies []Cookie

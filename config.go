@@ -53,11 +53,11 @@ type Config struct {
 	// Timeout is the context timeout.
 	Timeout time.Duration `json:"timeout" yaml:"timeout"`
 
-	// Headless dicates whether Chrome will start headless (without a visible window)
+	// UseXvfb dicates whether Chrome will start headless (without a visible window)
 	//
 	// It will NOT use the '--headless' option, rather it will use a virtual display.
 	// Requires Xvfb to be installed, only available on Linux.
-	Headless bool `json:"headless" yaml:"headless"`
+	UseXvfb bool `json:"useXvfb" yaml:"useXvfb"`
 
 	// Extensions are the paths to the extensions to load.
 	Extensions []string `json:"extensions" yaml:"extensions"`
@@ -108,10 +108,10 @@ func WithTimeout(timeout time.Duration) Option {
 	}
 }
 
-// WithHeadless creates a headless chrome instance.
-func WithHeadless() Option {
+// WithXvfb creates a headless chrome instance.
+func WithXvfb() Option {
 	return func(c *Config) {
-		c.Headless = true
+		c.UseXvfb = true
 	}
 }
 

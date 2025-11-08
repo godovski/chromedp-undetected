@@ -14,7 +14,7 @@ func TestNetworkIdleListener(t *testing.T) {
 		n,
 		NewConfig(
 			WithTimeout(20*time.Second),
-			WithHeadless(),
+			WithXvfb(),
 		),
 		func(ctx context.Context) error {
 			idleListener := NetworkIdleListener(ctx, time.Second, time.Second*10)

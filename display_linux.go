@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"regexp"
@@ -114,6 +115,8 @@ func newFrameBuffer(screenSize string) (*frameBuffer, error) { //nolint:funlen
 		display = strings.TrimSpace(resp.display)
 		if _, err := strconv.Atoi(display); err != nil {
 			return nil, errors.New("xvfb did not print the display number")
+		} else {
+			log.Printf("Running xvfb on display: %s", display)
 		}
 
 	case <-time.After(10 * time.Second):
