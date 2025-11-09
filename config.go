@@ -59,6 +59,8 @@ type Config struct {
 	// Requires Xvfb to be installed, only available on Linux.
 	UseXvfb bool `json:"useXvfb" yaml:"useXvfb"`
 
+	ScreenSize string `json:"screenSize" yaml:"screenSize"`
+
 	// Extensions are the paths to the extensions to load.
 	Extensions []string `json:"extensions" yaml:"extensions"`
 
@@ -70,7 +72,8 @@ type Config struct {
 // NewConfig creates a new config object with defaults.
 func NewConfig(opts ...Option) Config {
 	c := Config{
-		NoSandbox: DefaultNoSandbox,
+		NoSandbox:  DefaultNoSandbox,
+		ScreenSize: "1920x1080",
 	}
 
 	for _, o := range opts {
@@ -91,6 +94,13 @@ func WithContext(ctx context.Context) Option {
 func WithUserDataDir(dir string) Option {
 	return func(c *Config) {
 		c.UserDataDir = dir
+	}
+}
+
+// WithScreenSize wxh to set width and height
+func WithScreenSize(screenSize string) Option {
+	return func(c *Config) {
+		c.ScreenSize = screenSize
 	}
 }
 

@@ -147,14 +147,14 @@ func useXvfbFlag(config Config) ([]chromedp.ExecAllocatorOption, func() error, e
 			err  error
 		)
 
-		optx, cleanup, err = xvfbOpts()
+		optx, cleanup, err = xvfbOpts(config.ScreenSize)
 		if err != nil {
 			return nil, cleanup, err
 		}
-
+		geometry := strings.ReplaceAll(config.ScreenSize, "x", ",")
 		opts = append(opts,
 			// chromedp.Flag("headless", false),
-			chromedp.Flag("window-size", "1920,1080"),
+			chromedp.Flag("window-size", geometry),
 			chromedp.Flag("start-maximized", true),
 			chromedp.Flag("no-sandbox", true),
 		)

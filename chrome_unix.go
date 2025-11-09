@@ -5,6 +5,7 @@
 package chromedpundetected
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"syscall"
@@ -12,9 +13,9 @@ import (
 	"github.com/chromedp/chromedp"
 )
 
-func xvfbOpts() (opts []chromedp.ExecAllocatorOption, cleanup func() error, err error) {
+func xvfbOpts(screenSize string) (opts []chromedp.ExecAllocatorOption, cleanup func() error, err error) {
 	// Create virtual display
-	frameBuffer, err := newFrameBuffer("1920x1080x24")
+	frameBuffer, err := newFrameBuffer(fmt.Sprintf("%sx24", screenSize))
 	if err != nil {
 		return nil, nil, err
 	}
